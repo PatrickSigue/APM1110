@@ -80,3 +80,5 @@ boxplot(Females, Males, names = c("Females", "Males"),
 ```
 
 The graph shows that the females, as a group, performed better than the males. However, the female score distribution exhibits greater variability than the males while the male scores are more around their median.
+
+Github Link: https://github.com/PatrickSigue/APM1110
