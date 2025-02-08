@@ -1,0 +1,42 @@
+---
+title: "SEC-1-FA2-GROUP-1-SIGUE,-JP-FA2"
+author: "Sigue, John Patrick A."
+date: "2025-02-07"
+output: md_document
+geometry: margin = 1cm
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## 3. An experiment consists of rolling a die. Use R to simulate this experiment 600 times and obtain the relative frequency of each possible outcome.
+
+```{r}
+possible <- c(1,2,3,4,5,6)
+
+experiment <- sample(possible, 600, replace = TRUE)
+
+results <- data.frame(
+           Outcome = possible,
+           Frequency = c(sum(experiment == 1), sum(experiment == 2), sum(experiment == 3), 
+                         sum(experiment == 4), sum(experiment == 5), sum(experiment == 6)))
+
+brplt <- barplot(results$Frequency, names.arg = possible, main = "Frequency of Die Roll Result",
+        xlab = "Outcomes", ylab = "Frequency", ylim = c(0,max(results$Frequency)), col = "#FFC300")
+
+text(brplt, results$Frequency, labels = results$Frequency, 
+     cex = 1, pos = 1)
+```
+
+### Hence, estimate the probability of getting each of 1, 2, 3, 4, 5, and 6.
+
+```{r}
+rel_freq <- round(results$Frequency / 600 * 100, 2)
+
+relative_frequency <- data.frame(Outcomes = c(possible, "Total"), 
+                      "Probability(%)" = c(rel_freq, sum(rel_freq)))
+
+print(relative_frequency)
+```
