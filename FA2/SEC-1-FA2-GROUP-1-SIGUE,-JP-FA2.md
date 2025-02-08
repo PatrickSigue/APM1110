@@ -15,7 +15,7 @@
     text(brplt, results$Frequency, labels = results$Frequency, 
          cex = 1, pos = 1)
 
-![](SEC-1-FA2-GROUP-1-SIGUE,-JP-FA2_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+![Die Roll Frequency](die_roll_frequency.png)
 
 ### Hence, estimate the probability of getting each of 1, 2, 3, 4, 5, and 6.
 
