@@ -1,0 +1,73 @@
+---
+title: "SEC-1-FA3-GROUP-1-SIGUE,-JP-FA3"
+author: "Sigue, John Patrick A."
+date: "2025-02-12"
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A binary communication channel carries data as one of two sets of signals denoted by 0 and 1. Owing to noise, a transmitted 0 is sometimes received as a 1, and a transmitted 1 is sometimes received as a 0. For a given channel, it can be assumed that a transmitted 0 is correctly received with probability 0.95, and a transmitted 1 is correctly received with probability 0.75. Also, 70% of all messages are transmitted as a 0. If a signal is sent, determine the probability that:
+
+\*R = Received, T = Transmitted
+
+```{r}
+binary_comm <- data.frame(correct = c(0.95, 0.75), error = c(0.05, 0.25),
+                          sent = c(0.70, 0.30), row.names = 0:1)
+binary_comm
+```
+
+### a 1 was received
+
+$P(R = 1) = P(R = 1 | T = 0) \cdot P(T = 0) + P(R = 1 | T = 1) \cdot P(T = 1)$
+
+```{r}
+prob_get1 <- round((0.05 * 0.7 + .75 * 0.3), 4)
+cat(prob_get1 * 100, "%", sep = "")
+```
+
+### a 1 was transmitted given then a 1 was received
+
+$P(T = 1 | R = 1) = \frac{P(T = 1) \cdot P(R = 1 | T = 1)}{P(R = 1)}$
+
+```{r}
+prob_send1_get1 <- round(((0.3 * 0.75) / prob_get1), 4)
+cat(prob_send1_get1 * 100, "%", sep = "")
+```
+
+## There are three employees working at an IT company: Jane, Amy, and Ava, doing 10%, 30%, and 60% of the programming, respectively. 8% of Jane’s work, 5% of Amy’s work, and just 1% of Ava‘s work is in error.
+
+```{r}
+work <- data.frame(runs = c(0.92, 0.95, 0.99), errors = c(0.08, 0.05, 0.01),
+                   load = c(0.10, 0.30, 0.60), row.names = c("Jane", "Amy", "Ava"))
+work
+```
+
+### What is the overall percentage of error?
+
+$P(E) = P(E | \text{Jane}) * P(\text{Jane}) + P(E | \text{Amy}) * P(\text{Amy}) + P(E | \text{Ava}) * P(\text{Ava})$
+
+```{r}
+error <- round((0.08 * 0.1 + 0.05 * 0.3 + 0.01 * 0.6), 4)
+cat(error * 100, "%", sep = "")
+```
+
+### If a program is found with an error, who is the most likely person to have written it?
+
+$P(E|\text{Employee}) = \frac{P(E|\text{Employee}) \cdot P(\text{Employee})}{P(E)}$
+
+```{r}
+e_jane <- round(((0.08 * 0.1) / error), 4)
+e_amy <- round(((0.05 * 0.3) / error), 4)
+e_ava <- round(((0.01 * 0.6) / error), 4)
+
+e_likely <- max(c(e_jane, e_amy, e_ava))
+
+cat("Most likely to cause an error is Amy with ", e_amy * 100, "%.\n\n", sep = "")
+
+cat("Jane:", e_jane * 100, "%\n", sep = "")
+cat("Amy:", e_amy * 100, "%\n", sep = "")
+cat("Ava:", e_ava * 100, "%\n", sep = "")
+```
