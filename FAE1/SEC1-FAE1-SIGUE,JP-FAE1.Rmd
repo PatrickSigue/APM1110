@@ -1,0 +1,50 @@
+---
+title: "Sec1-FAE1-SIGUE,JP-FAE1"
+author: "Sigue, John Patrick A."
+date: "2025-02-18"
+output: md_document
+geometry: margin = 2cm
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A malicious spyware can infect a computer system though the Internet or through email. The spyware comes through the Internet 70% of the time and 30% of the time, it gets in through email. If it enters via the Internet the anti-virus detector will detect it with probability 0.6, and via email, it is detected with probability 0.8.
+
+```{r}
+spyware <- data.frame(detected = c(0.6, 0.8), undetected = c(0.4, 0.2),
+                      via = c(.70, .30), row.names = c("Internet", "Email"))
+spyware
+```
+
+### (a) What is the probability that this spyware infects the system?
+
+\*Infect = Undetected
+
+$$
+P(I) = P(I \vert Internet) \cdot P(Internet) + P(I \vert Email) \cdot P(Email)
+$$
+
+```{r}
+prob_infect <- round(.4 * .7 + .2 * .3, 4)
+
+cat("The probability that this spyware infects the system is ", 
+    prob_infect * 100, "%", sep = "")
+```
+
+### (b) If the spyware is detected, what is the probability that it came through the Internet?
+
+\*P(D) = 1 - P(I)
+
+$$
+P(D \vert Internet) = \frac{P(D \vert Internet) \cdot P(Internet)}{P(D)}
+$$
+
+```{r}
+prob_detect <- 1 - prob_infect
+prob_det_int <- round((0.6 * 0.7)/(prob_detect), 4)
+
+cat("The probability that the spyware detected came from the internet is ", 
+    prob_det_int * 100, "%", sep = "")
+```
