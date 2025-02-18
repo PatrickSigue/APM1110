@@ -1,8 +1,9 @@
 ---
-title: "Sec1-FAE1-SIGUE,JP-FAE1"
+title: "SEC1-FAE1-SIGUE,JP-FAE1"
+subtitle: "Github: https://github.com/PatrickSigue/APM1110/blob/main/FAE1/SEC1-FAE1-SIGUE%2CJP-FAE1.md"
 author: "Sigue, John Patrick A."
 date: "2025-02-18"
-output: md_document
+output: pdf_document
 geometry: margin = 2cm
 ---
 
