@@ -3,7 +3,7 @@ title: "SEC1-FAE1-SIGUE,JP-FAE1"
 subtitle: "Github: https://github.com/PatrickSigue/APM1110/blob/main/FAE1/SEC1-FAE1-SIGUE%2CJP-FAE1.md"
 author: "Sigue, John Patrick A."
 date: "2025-02-18"
-output: pdf_document
+output: md_document
 geometry: margin = 2cm
 ---
 
@@ -39,7 +39,7 @@ cat("The probability that this spyware infects the system is ",
 \*P(D) = 1 - P(I)
 
 $$
-P(D \vert Internet) = \frac{P(D \vert Internet) \cdot P(Internet)}{P(D)}
+P(D \vert Internet) = \frac{P(Internet \vert D) \cdot P(Internet)}{P(D)}
 $$
 
 ```{r}
@@ -48,4 +48,40 @@ prob_det_int <- round((0.6 * 0.7)/(prob_detect), 4)
 
 cat("The probability that the spyware detected came from the internet is ", 
     prob_det_int * 100, "%", sep = "")
+```
+
+## Of the emails you receive 20% are spam on average. Your spam filter is able to detect 90% of them but also misclassifies as spam 15% of the genuine emails.
+
+```{r}
+email <- data.frame(correct = c(.90, .85), incorrect = c(.10, .15),
+                    recieved = c(.20, .80), row.names = c("Spam", "Genuine"))
+email
+```
+
+### (a) If an email arrives and is marked spam, what is the probability that it really is spam?
+
+$$
+P(S \vert C) = \frac{P(C\vert S)\cdot P(S)}{P(Spam)} \newline
+P(Spam) = P(C\vert S)\cdot P(S) + P(I\vert G)\cdot P(G)
+$$
+
+```{r}
+prob_spam <- round((.90 * .20 + .15 * .8), 4)
+prob_spam_c <- round(((.90 * .2)/ prob_spam), 4)
+
+cat("The probability of an email marked spam that is spam is ", prob_spam_c * 100, "%.", sep = "")
+```
+
+### (b) If an email arrives and is not marked spam, what is the probability that it is legitimate?
+
+$$
+P(G \vert C) = \frac{P(C\vert G)\cdot P(G)}{P(Genuine)} \newline
+P(Genuine) = P(C\vert G)\cdot P(G) + P(I\vert S)\cdot P(S)
+$$
+
+```{r}
+prob_gen <- round((.85 * .80 + .10 * .20), 4)
+prob_gen_c <-round(((.85 * .80)/ prob_gen), 4)
+
+cat("The probability of an email marked genuine that is genuine is ", prob_gen_c * 100, "%.", sep = "")
 ```
