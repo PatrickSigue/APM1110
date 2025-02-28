@@ -1,8 +1,9 @@
 ---
 title: "SIGUE, JP-FA4"
+subtitle: "Github: https://github.com/PatrickSigue/APM1110/blob/main/FA4/SIGUE%2C-JP-FA4.md"
 author: "Sigue, John Patrick A."
 date: "2025-02-25"
-output: md_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
