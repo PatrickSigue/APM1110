@@ -1,0 +1,118 @@
+---
+title: "SIGUE,-JP-FA5"
+author: "Sigue, John Patrick A."
+date: "2025-02-28"
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 80), tidy = TRUE)
+library(data.tree)
+```
+
+## An email message can travel through one of three server routes. The percentage of errors in each of the servers and the percentage of messages that travel through each route are shown in the following table. Assume that the servers are independent.
+
+```{r}
+email <- data.frame(Messages = c(.40, .25, .35), Errors = c(.01, .02, .015), row.names = c("Server 1", "Server 2", "server 3"))
+email
+```
+
+### What is the probability of receiving an email containing an error?
+
+$$P(E) = P(E\vert S_1) P(S_1) +  P(E\vert S_2) P(S_2) +  P(E\vert S_3) P(S_3)$$
+
+```{r}
+prob_err <- round(sum(email$Messages * email$Errors), 4)
+
+cat("The probability of recieving an email containing an error is ", prob_err * 100, "%.", sep = "")
+```
+
+### What is the probability that a message will arrive without error?
+
+$$P(E^C) = 1 - P(E)$$
+
+```{r}
+prob_wo_err <- round((1 - prob_err), 4)
+
+cat("The probability of recieving an email without an error is ", prob_wo_err * 100, "%.", sep = "")
+```
+
+### If a message arrives without error, what is the probability that it was sent through server 1?
+
+$$P(S_1 \vert E^C) = \frac{P(E^C\vert S_1)P(S_1)}{P(E^C)}$$
+
+```{r}
+prob_wo_s1 <- round((((1-.01) * 0.40) / prob_wo_err), 4)
+
+cat("The probability of recieving an email without an error from server 1 is ", prob_wo_s1 * 100, "%.", sep = "")
+```
+
+## A software company surveyed managers to determine the probability that they would buy a new graphics package that includes three-dimensional graphics. About 20% of office managers were certain that they would not buy the package, 70% claimed that they would buy, and the others were undecided. Of those who said that they would not buy the package, only 10% said that they were interested in upgrading their computer hardware. Of those interested in buying the graphics package, 40% were also interested in upgrading their computer hardware. Of the undecided, 20% were interested in upgrading their computer hardware.
+
+-   Let A denote the intention of not buying, B the intention of buying, C the undecided, and G the intention of upgrading the computer hardware.
+
+```{r}
+survey <- data.frame(Group = c("A", "B", "C"), Probability = c(.20, .70, .10), G = c(.10, .40, .20))
+
+survey
+```
+
+## Calculate the probability that a manager chosen at random will not upgrade the computer hardware ($P(\overline{G})$)
+
+$$P(\overline{G}) = P(A \vert\overline{G}) P(A) + P(B\vert\overline{G}) P(B) + P(C\vert\overline{G}) P(C)$$
+```{r}
+survey$"~G" <- 1 - survey$G
+
+prob_neg_g <- round(sum(survey$Probability * survey$`~G`), 4)
+cat("The probability that a manager chosen at random will not upgrade the computer hardware is ", prob_neg_g * 100, "%.", sep = "")
+```
+
+## Explain what is meant by the posterior probability of $B$ given $G, P(B\vert G)$.
+
+This tells us how likely a manager is to buy the graphics package if we already know that they are interested in upgrading.
+
+## Construct a tree diagram and use it to calculate the following probabilities: $P(G), P(B\vert G), P(B\vert \overline{G}), P(C\vert G), P(\overline{C}\vert \overline{G})$
+
+```{r}
+survey$pathString <- paste("Survey", survey$Group, sep = "/")
+tree <- as.Node(survey)
+
+print(tree, "Probability", "G", "~G")
+```
+```{r}
+prob_g <- (1 - prob_neg_g)
+prob_b_g <- round((tree$B$G * tree$B$Probability)/ prob_g, 4)
+prob_b_neg_g <- round((tree$B$'~G' * tree$B$Probability)/ prob_neg_g, 4)
+prob_c_g <- round((tree$C$G * tree$C$Probability)/ prob_g, 4)
+prob_neg_c_neg_g <- round((tree$A$'~G' * tree$A$Probability + tree$B$'~G' * tree$B$Probability)/ prob_neg_g, 4)
+
+cat("P(G) = ", prob_g *100, "%\nP(B|G) = ", prob_b_g * 100, "%\nP(B|~G) = ", prob_b_neg_g * 100, "%\nP(C|G) = ", prob_c_g * 100, "%\nP(~C|~G) = ", prob_neg_c_neg_g * 100, "%", sep = "")
+```
+
+## A malicious spyware can infect a computer system through the Internet or through email. The spyware comes through the Internet 70% of the time and 30% of the time, it gets in through email. If it enters via the Internet the anti-virus detector will detect it with probability 0.6, and via email, it is detected with probability 0.8.
+
+```{r}
+spyware <- data.frame(Via = c(.70, .30), Detect = c(.60, .80), row.names = c("Internet", "Email"))
+spyware
+```
+
+### What is the probability that this spyware infects the system?
+
+$$P(\neg D) = P(\neg D\vert V_I) P(V_I) + P(\neg D\vert V_E) P(V_E)$$
+```{r}
+spyware$'~Detect'  <- 1 - spyware$Detect
+
+prob_neg_d  <- round(sum(spyware$`~Detect` * spyware$Via), 4)
+cat("The probability that the spyware infects the system is ", prob_neg_d * 100, "%.", sep = "")
+```
+
+### If the spyware is detected, what is the probability that it came through the Internet?
+
+$$P(D\vert V_I) = \frac{P(V_I\vert D) P(V_I)}{P(D)}$$
+
+```{r}
+prob_det_int <- round(((spyware$Detect[1] * spyware$Via[1]) / (1 - prob_neg_d)), 4)
+
+cat("The probability that the spyware detected came from the internet is ", prob_det_int * 100, "%.", sep = "")
+```
