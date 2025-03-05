@@ -34,17 +34,17 @@
 
     cat("Mean:", round(mean_x, 2))
 
-    ## Mean: 4.13
+    ## Mean: 4.34
 
     cat("\nVariance:", round(var_x, 2))
 
     ## 
-    ## Variance: 21.9
+    ## Variance: 23.43
 
     cat("\nStandard Deviation:", round(sd_x, 2))
 
     ## 
-    ## Standard Deviation: 4.68
+    ## Standard Deviation: 4.84
 
 1.  Plot the histogram of the results.
 
@@ -55,7 +55,7 @@
     axis(side = 1, at = seq(0, max(x) + 5, by = 5))
     axis(side = 2, at = seq(0, 800, by = 100))
 
-![](unnamed-chunk-5-1.png)
+![](SEC-1-FA6-GROUP-1-SIGUE,-JP-FA6_files/figure-markdown_strict/unnamed-chunk-5-1.png)
 
 ## Hypergeometric Distribution. Consider a plant manufacturing IC chips of which 10% are expected to be defective. The chips are packed in boxes for export. Before transportation, a sample is drawn from each box. Estimate the probability that the sample contains more than 10% defectives, when:
 

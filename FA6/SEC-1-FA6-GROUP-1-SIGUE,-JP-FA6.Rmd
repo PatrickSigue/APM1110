@@ -1,8 +1,9 @@
 ---
 title: "SEC-1-FA6-GROUP-1-SIGUE,-JP-FA6"
+subtitle: "Github: https://github.com/PatrickSigue/APM1110/blob/main/FA6/SEC-1-FA6-GROUP-1-SIGUE%2C-JP-FA6.md"
 author: "Sigue, John Patrick A."
 date: "2025-03-05"
-output: md_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
