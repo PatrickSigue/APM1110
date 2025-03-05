@@ -55,7 +55,7 @@
     axis(side = 1, at = seq(0, max(x) + 5, by = 5))
     axis(side = 2, at = seq(0, 800, by = 100))
 
-![](SEC-1-FA6-GROUP-1-SIGUE,-JP-FA6_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+![](unnamed-chunk-5-1.png)
 
 ## Hypergeometric Distribution. Consider a plant manufacturing IC chips of which 10% are expected to be defective. The chips are packed in boxes for export. Before transportation, a sample is drawn from each box. Estimate the probability that the sample contains more than 10% defectives, when:
 
